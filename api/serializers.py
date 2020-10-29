@@ -103,38 +103,12 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = ("id", "text", "author", "score", "pub_date")
         model = Review
 
-    # def validate(self, data):
-    #    user = self.context['request'].user
-    #    title_id = self.context.get('request').parser_context['kwargs']['titles_pk']
-    #    print(user, title_id, data)
-    #    review = get_object_or_404(Review, title_id=title_id, author=user)
-    #    print(review[0], user, review, data)
-    #    if review:
-    #        raise ValidationError('Можно оставить только один отзыв на одно произведение.')
-    #    return data
-
-    # def validate(self, attrs):
-    #    print(self.context)
-    #    request = self.context['request']
-    #    if request.method != 'POST':
-    #        return attrs
-
-    #    title = Title.objects.filter(pk=self.context['view'].kwargs.get('title')).exists()
-    #    if not title:
-    #        return attrs
-
-    #    title = Title.objects.get(pk=self.context['view'].kwargs.get('title'))
-    #    review = Review.objects.filter(author=request.user).filter(title=title).exists()
-    #    if review:
-    #        raise serializers.ValidationError('One user can make only one review per title.')
-    #    return attrs
-
     def create(self, validated_data):
         author = self.context["request"].user
         request = self.context.get("request")
         title_id = request.parser_context["kwargs"]["titles_pk"]
         method = request.method
-        title = get_object_or_404(Title, pk=title_id)
+        # title = get_object_or_404(Title, pk=title_id)
         review = Review.objects.filter(title_id=title_id, author=author)
         if method == "POST" and review:
             raise ValidationError("Только один отзыв")

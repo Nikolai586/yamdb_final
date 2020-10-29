@@ -1,13 +1,16 @@
-import random
+# import random
 from rest_framework.views import APIView
-from rest_framework.exceptions import ValidationError
-from django_filters.rest_framework import DjangoFilterBackend
+
+# from rest_framework.exceptions import ValidationError
+# from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django.db.models import Avg
-from rest_framework import viewsets, mixins, filters, permissions, generics, status
+from rest_framework import viewsets, mixins, filters, permissions, generics
+
+# status
 
 from .models import User, Category, Genre, Title, Review, Comment
 from .serializers import (
@@ -154,8 +157,8 @@ class ReviewViewSet(viewsets.ModelViewSet):
         title.save()
 
     def perform_create(self, serializer):
-        pk = self.kwargs.get("titles_pk")
-        title = get_object_or_404(Title, pk=self.kwargs.get("titles_pk"))
+        # pk = self.kwargs.get("titles_pk")
+        # title = get_object_or_404(Title, pk=self.kwargs.get("titles_pk"))
         serializer.save(author=self.request.user, title_id=self.kwargs.get("titles_pk"))
         self.update_rating()
 
@@ -182,7 +185,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         return queryset
 
     def perform_create(self, serializer):
-        review = get_object_or_404(Review, pk=self.kwargs.get("review_pk"))
+        # review = get_object_or_404(Review, pk=self.kwargs.get("review_pk"))
         serializer.save(
             author=self.request.user, review_id=self.kwargs.get("review_pk")
         )
