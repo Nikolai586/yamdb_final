@@ -47,7 +47,8 @@ class SignUpView(generics.CreateAPIView):
             serializer.save()
             send_mail(
                 "Авторизация",
-                f"confirmation_code = {serializer.confirmation_code} email = {serializer.email}",
+                f"confirmation_code = {serializer.confirmation_code}\
+                    email = {serializer.email}",
                 "mi@mi.mi",
                 [f"{serializer.email}"],
                 fail_silently=False,
@@ -139,7 +140,10 @@ class TitleViewSet(viewsets.ModelViewSet):
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, IsAuthorOrAdminOrModerator)
+    permission_classes = (
+        IsAuthenticatedOrReadOnly,
+        IsAuthorOrAdminOrModerator
+        )
     pagination_class = PageNumberPagination
 
     def get_title(self):
@@ -152,14 +156,18 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def update_rating(self):
         title = get_object_or_404(Title, id=self.kwargs["titles_pk"])
-        average_rating = Review.objects.filter(title=title).aggregate(Avg("score"))
+        average_rating = Review.objects.filter(
+            title=title).aggregate(Avg("score"))
         title.rating = round(average_rating["score__avg"], 1)
         title.save()
 
     def perform_create(self, serializer):
         # pk = self.kwargs.get("titles_pk")
         # title = get_object_or_404(Title, pk=self.kwargs.get("titles_pk"))
-        serializer.save(author=self.request.user, title_id=self.kwargs.get("titles_pk"))
+        serializer.save(
+            author=self.request.user,
+            title_id=self.kwargs.get("titles_pk")
+            )
         self.update_rating()
 
     def perform_update(self, serializer):
@@ -174,7 +182,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = (IsAuthorOrAdminOrModerator, IsAuthenticatedOrReadOnly)
+    permission_classes = (
+        IsAuthorOrAdminOrModerator,
+        IsAuthenticatedOrReadOnly
+        )
 
     def get_review(self):
         review = get_object_or_404(Review, id=self.kwargs["review_pk"])

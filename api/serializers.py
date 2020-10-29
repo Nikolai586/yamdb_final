@@ -61,7 +61,14 @@ class SignInSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ("first_name", "last_name", "username", "bio", "email", "role")
+        fields = (
+            "first_name",
+            "last_name",
+            "username",
+            "bio",
+            "email",
+            "role"
+            )
         model = User
 
 
@@ -92,7 +99,15 @@ class TitleSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        fields = ("id", "name", "year", "rating", "description", "genre", "category")
+        fields = (
+            "id",
+            "name",
+            "year",
+            "rating",
+            "description",
+            "genre",
+            "category"
+            )
         model = Title
 
 

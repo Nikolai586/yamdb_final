@@ -17,7 +17,12 @@ class User(AbstractUser):
     confirmation_code = models.IntegerField(blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     role = models.CharField(max_length=10, choices=USER_ROLES, default="user")
-    username = models.CharField(max_length=30, unique=True, blank=True, null=True)
+    username = models.CharField(
+        max_length=30,
+        unique=True,
+        blank=True,
+        null=True
+        )
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
 
@@ -53,11 +58,23 @@ class Title(models.Model):
 
 
 class Review(models.Model):
-    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name="reviews")
+    title = models.ForeignKey(
+        Title,
+        on_delete=models.CASCADE,
+        related_name="reviews"
+        )
     text = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reviews")
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="reviews"
+        )
     score = models.IntegerField(default=0)
-    pub_date = models.DateTimeField("Дата добавления", auto_now_add=True, db_index=True)
+    pub_date = models.DateTimeField(
+        "Дата добавления",
+        auto_now_add=True,
+        db_index=True
+        )
 
 
 class Comment(models.Model):
@@ -65,5 +82,13 @@ class Comment(models.Model):
         Review, on_delete=models.CASCADE, related_name="comments"
     )
     text = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
-    pub_date = models.DateTimeField("Дата добавления", auto_now_add=True, db_index=True)
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="comments"
+        )
+    pub_date = models.DateTimeField(
+        "Дата добавления",
+        auto_now_add=True,
+        db_index=True
+        )

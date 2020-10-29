@@ -23,7 +23,11 @@ router.register("genres", GenreViewSet, basename="genres")
 router.register("titles", TitleViewSet, basename="titles")
 review_router = routers.NestedSimpleRouter(router, r"titles", lookup="titles")
 review_router.register(r"reviews", ReviewViewSet, basename="reviews")
-comment_router = routers.NestedSimpleRouter(review_router, r"reviews", lookup="review")
+comment_router = routers.NestedSimpleRouter(
+    review_router,
+    r"reviews",
+    lookup="review"
+    )
 comment_router.register(r"comments", CommentViewSet, basename="comment")
 
 
@@ -37,5 +41,9 @@ urlpatterns = [
     path("", include(comment_router.urls)),
     path("auth/email/", SignUpView.as_view()),
     path("auth/token/", SignInView.as_view()),
-    path("auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path(
+        "auth/token/refresh/",
+        TokenRefreshView.as_view(),
+        name="token_refresh"
+        ),
 ]
