@@ -8,6 +8,8 @@ venv/
 .vscode/
 .ssh
 .ssh/
+sent_emails/
+.sent_emails/
 
 __pycache__/
 *.py[cod]
