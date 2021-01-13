@@ -39,21 +39,21 @@ jobs:
           repository: ${{ secrets.DOCKER_USERNAME }}/yamdb_final
           tag_with_ref: true
   
-  deploy:
-    runs-on: ubuntu-latest
-    needs: push_to_docker_hub
-    steps:
-    - name: executing remote ssh commands to deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-          cd yamdb_final
-          sudo docker-compose stop
-          sudo docker-compose down
-          sudo docker-compose up -d
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: push_to_docker_hub
+  #   steps:
+  #   - name: executing remote ssh commands to deploy
+  #     uses: appleboy/ssh-action@master
+  #     with:
+  #       host: ${{ secrets.HOST }}
+  #       username: ${{ secrets.USER }}
+  #       key: ${{ secrets.SSH_KEY }}
+  #       script: |
+  #         cd yamdb_final
+  #         sudo docker-compose stop
+  #         sudo docker-compose down
+  #         sudo docker-compose up -d
 
   send_message:
     runs-on: ubuntu-latest
