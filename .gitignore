@@ -10,6 +10,8 @@ venv/
 .ssh/
 sent_emails/
 .sent_emails/
+koya@84.201.141.212
+fixtures.json
 
 __pycache__/
 *.py[cod]

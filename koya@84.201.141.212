@@ -8,9 +8,9 @@ static/
         root /home/koya/yamdb_final/;
     }
 
-    location /media/ {
-        root /home/koya/yamdb_final/;
-    }
+        location /media/ {
+            root /home/koya/yamdb_final/;
+        }
 
     location / {
         proxy_pass       http://web:8000;
